@@ -1,0 +1,12 @@
+node {
+    stage('checkout') {
+        git branch: 'main', url: 'https://github.com/akashkadao/spring-petclinic.git' 
+    }
+    stage('build') {
+        sh "mvn clean package"
+    }
+    stage('results') {
+        junit '**/target/surefire-reports/TEST-*.xml'
+        archiveArtifacts 'target/*.jar'
+    }
+}
